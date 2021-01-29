@@ -1,0 +1,41 @@
+public class SplashScreen extends AppCompatActivity {
+
+    // Splash screen timer
+    private static int SPLASH_TIME_OUT = 1000;
+    LocalSharedPreferences localSharedPreferences;
+    boolean isInternetAvailable;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash_screen);
+
+        localSharedPreferences = new LocalSharedPreferences(this);
+
+        new Handler().postDelayed(new Runnable() {
+
+            /*
+             * Showing splash screen with a timer. This will be useful when you
+             * want to show case your app logo / company
+             */
+
+            @Override
+            public void run() {
+
+                if (localSharedPreferences.getSharedPreferences(Constants.AccessToken) != null) {
+                    Intent x = new Intent(getApplicationContext(), ShopActivity.class);
+                    Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.com_mixpanel_android_fade_in, R.anim.com_mixpanel_android_fade_out).toBundle();
+                    startActivity(x, bndlanimation);
+                    finish();
+                } else {
+                    Intent x = new Intent(getApplicationContext(), SignInUpHomePage.class);
+                    Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.com_mixpanel_android_fade_in, R.anim.com_mixpanel_android_fade_out).toBundle();
+                    startActivity(x, bndlanimation);
+                    finish();
+                }
+
+            }
+        }, SPLASH_TIME_OUT);
+
+    }
+}
